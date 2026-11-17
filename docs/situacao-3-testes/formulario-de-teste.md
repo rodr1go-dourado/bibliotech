@@ -4,8 +4,8 @@ O formulário está **dentro do próprio sistema**, em `/feedback/novo` (menu **
 
 ---
 
-**Link do sistema:** https://SEU-APP.onrender.com
-**Link do formulário:** https://SEU-APP.onrender.com/feedback/novo
+**Link do sistema:** https://bibliotech-c8ps.onrender.com
+**Link do formulário:** https://bibliotech-c8ps.onrender.com/feedback/novo
 
 ### Roteiro sugerido para o testador
 

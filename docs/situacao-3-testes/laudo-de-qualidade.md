@@ -3,7 +3,7 @@
 | Item | Valor |
 |---|---|
 | Sistema | BiblioTech, versão 1.0 |
-| Ambiente de produção | https://SEU-APP.onrender.com (Render + PostgreSQL) |
+| Ambiente de produção | https://bibliotech-c8ps.onrender.com (Render + PostgreSQL) |
 | Responsável | NOME DO ALUNO |
 | Período de testes | DD/MM/AAAA a DD/MM/AAAA |
 

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Cadastro{% endblock %}
+{% block content %}
+<div class="painel">
+  <h1>Criar conta</h1>
+  <form method="post" class="form">
+    <label>Nome completo <input type="text" name="nome" value="{{ nome or '' }}" maxlength="100" required></label>
+    <label>E-mail <input type="email" name="email" value="{{ email or '' }}" maxlength="120" required></label>
+    <label>Senha <input type="password" name="senha" minlength="6" required>
+      <small class="muted">Mínimo de 6 caracteres</small></label>
+    <label>Confirme a senha <input type="password" name="confirmacao" minlength="6" required></label>
+    <button class="btn" type="submit">Cadastrar</button>
+  </form>
+  <p class="muted">Já tem conta? <a href="{{ url_for('auth.login') }}">Entrar</a></p>
+</div>
+{% endblock %}

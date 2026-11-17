@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Entrar{% endblock %}
+{% block content %}
+<div class="painel">
+  <h1>Entrar</h1>
+  <form method="post" class="form">
+    <label>E-mail <input type="email" name="email" value="{{ email or '' }}" required autofocus></label>
+    <label>Senha <input type="password" name="senha" required></label>
+    <button class="btn" type="submit">Entrar</button>
+  </form>
+  <p class="muted">Não tem conta? <a href="{{ url_for('auth.registrar') }}">Cadastre-se</a></p>
+</div>
+{% endblock %}

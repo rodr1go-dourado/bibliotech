@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Reportar teste{% endblock %}
+{% block content %}
+{% set d = dados or {} %}
+<div class="painel painel-largo">
+  <h1>Formulário de teste</h1>
+  <p class="muted">Testou o BiblioTech? Conte o que funcionou, o que deu erro e anexe um print da tela, se puder.</p>
+  <form method="post" enctype="multipart/form-data" class="form form-2col">
+    <label>Seu nome *
+      <input type="text" name="nome_testador" maxlength="100" required value="{{ d.get('nome_testador', '') }}"></label>
+    <label>Data do teste
+      <input type="date" name="data_teste" value="{{ d.get('data_teste', '') }}"></label>
+    <label class="col-2">O que testou e funcionou
+      <textarea name="funcionou" rows="3" placeholder="Ex.: cadastro, login, busca por autor...">{{ d.get('funcionou', '') }}</textarea></label>
+    <label class="col-2">O que testou e NÃO funcionou (o que deve ser corrigido)
+      <textarea name="nao_funcionou" rows="3" placeholder="Descreva o passo a passo para reproduzir o erro">{{ d.get('nao_funcionou', '') }}</textarea></label>
+    <label class="col-2">Funcionalidade não testada (e por quê)
+      <textarea name="nao_testado" rows="2">{{ d.get('nao_testado', '') }}</textarea></label>
+    <label class="col-2">Sugestões de melhoria
+      <textarea name="sugestoes" rows="2">{{ d.get('sugestoes', '') }}</textarea></label>
+    <label class="col-2">Print da tela com erro (PNG/JPG, até 2 MB)
+      <input type="file" name="print_tela" accept="image/*"></label>
+    <div class="col-2"><button class="btn" type="submit">Enviar relatório</button></div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar livro' if livro else 'Novo livro' }}{% endblock %}
+{% block content %}
+{% set d = dados if dados else {} %}
+<div class="painel painel-largo">
+  <h1>{{ 'Editar livro' if livro else 'Novo livro' }}</h1>
+  <form method="post" class="form form-2col">
+    <label class="col-2">Título *
+      <input type="text" name="titulo" maxlength="200" required value="{{ d.get('titulo', livro.titulo if livro else '') }}"></label>
+    <label class="col-2">Autor *
+      <input type="text" name="autor" maxlength="150" required value="{{ d.get('autor', livro.autor if livro else '') }}"></label>
+    <label>ISBN (10 ou 13 dígitos)
+      <input type="text" name="isbn" maxlength="17" value="{{ d.get('isbn', (livro.isbn or '') if livro else '') }}"></label>
+    <label>Ano
+      <input type="number" name="ano" min="1450" value="{{ d.get('ano', (livro.ano or '') if livro else '') }}"></label>
+    <label>Categoria
+      <input type="text" name="categoria" maxlength="50" list="cats" value="{{ d.get('categoria', livro.categoria if livro else '') }}">
+      <datalist id="cats">
+        <option>Literatura Brasileira</option><option>Ficção</option><option>Tecnologia</option>
+        <option>História</option><option>Infantojuvenil</option>
+      </datalist></label>
+    <label>Quantidade de exemplares *
+      <input type="number" name="quantidade_total" min="1" required value="{{ d.get('quantidade_total', livro.quantidade_total if livro else 1) }}"></label>
+    <div class="col-2 acoes">
+      <button class="btn" type="submit">Salvar</button>
+      <a href="{{ url_for('livros.detalhe', livro_id=livro.id) if livro else url_for('livros.listar') }}">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

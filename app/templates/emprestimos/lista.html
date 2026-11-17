@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ titulo }}{% endblock %}
+{% block content %}
+<h1>{{ titulo }}</h1>
+
+{% if admin %}
+<nav class="abas">
+  <a class="{{ 'ativa' if filtro == 'ativos' }}" href="{{ url_for('emprestimos.todos', filtro='ativos') }}">Ativos</a>
+  <a class="{{ 'ativa' if filtro == 'atrasados' }}" href="{{ url_for('emprestimos.todos', filtro='atrasados') }}">Atrasados</a>
+  <a class="{{ 'ativa' if filtro == 'todos' }}" href="{{ url_for('emprestimos.todos', filtro='todos') }}">Todos</a>
+</nav>
+{% endif %}
+
+{% if emprestimos %}
+<div class="tabela-wrap">
+<table class="tabela">
+  <thead><tr>
+    <th>Livro</th>{% if admin %}<th>Leitor</th>{% endif %}
+    <th>Retirada</th><th>Devolver até</th><th>Status</th><th></th>
+  </tr></thead>
+  <tbody>
+  {% for e in emprestimos %}
+    <tr>
+      <td data-label="Livro">{{ e.livro.titulo }}</td>
+      {% if admin %}<td data-label="Leitor">{{ e.usuario.nome }}</td>{% endif %}
+      <td data-label="Retirada">{{ e.data_emprestimo.strftime('%d/%m/%Y') }}</td>
+      <td data-label="Devolver até">{{ e.data_prevista.strftime('%d/%m/%Y') }}</td>
+      <td data-label="Status">
+        <span class="tag {{ 'tag-erro' if e.atrasado else ('tag-ok' if e.ativo else 'tag-neutra') }}">{{ e.status }}</span>
+      </td>
+      <td>
+        {% if e.ativo %}
+        <form method="post" action="{{ url_for('emprestimos.devolver', emp_id=e.id) }}"
+              data-confirmar="Confirmar a devolução de '{{ e.livro.titulo }}'?">
+          <button class="btn btn-sm" type="submit">Devolver</button>
+        </form>
+        {% else %}
+          <span class="muted">{{ e.data_devolucao.strftime('%d/%m/%Y') }}</span>
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+  <p class="vazio">Nenhum empréstimo por aqui. <a href="{{ url_for('livros.listar') }}">Explore o acervo</a>.</p>
+{% endif %}
+{% endblock %}

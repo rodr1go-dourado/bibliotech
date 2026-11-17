@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Feedbacks{% endblock %}
+{% block content %}
+<h1>Relatórios de teste</h1>
+{% for fb in feedbacks %}
+  <article class="painel painel-largo feedback">
+    <header class="cabecalho">
+      <div><strong>{{ fb.nome_testador }}</strong>
+        <span class="muted">· testado em {{ fb.data_teste.strftime('%d/%m/%Y') }}</span></div>
+      <form method="post" action="{{ url_for('feedback.alterar_status', fb_id=fb.id) }}" class="inline">
+        <select name="status" onchange="this.form.submit()" aria-label="Status">
+          {% for s in status_validos %}<option {{ 'selected' if s == fb.status }}>{{ s }}</option>{% endfor %}
+        </select>
+      </form>
+    </header>
+    {% if fb.funcionou %}<h3>✅ Funcionou</h3><p>{{ fb.funcionou }}</p>{% endif %}
+    {% if fb.nao_funcionou %}<h3>❌ Não funcionou</h3><p>{{ fb.nao_funcionou }}</p>{% endif %}
+    {% if fb.nao_testado %}<h3>⏸ Não testado</h3><p>{{ fb.nao_testado }}</p>{% endif %}
+    {% if fb.sugestoes %}<h3>💡 Sugestões</h3><p>{{ fb.sugestoes }}</p>{% endif %}
+    {% if fb.print_tela %}
+      <a href="{{ url_for('feedback.print_tela', fb_id=fb.id) }}" target="_blank">
+        <img class="print" src="{{ url_for('feedback.print_tela', fb_id=fb.id) }}" alt="Print enviado por {{ fb.nome_testador }}"></a>
+    {% endif %}
+  </article>
+{% else %}
+  <p class="vazio">Nenhum relatório recebido ainda. Compartilhe o link <code>{{ url_for('feedback.novo', _external=True) }}</code> com os testadores.</p>
+{% endfor %}
+{% endblock %}

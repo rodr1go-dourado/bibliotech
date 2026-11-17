@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Acervo{% endblock %}
+{% block content %}
+<div class="cabecalho">
+  <h1>Acervo</h1>
+  {% if current_user.is_authenticated and current_user.is_admin %}
+    <a class="btn" href="{{ url_for('livros.novo') }}">+ Novo livro</a>
+  {% endif %}
+</div>
+
+<form class="filtros" method="get">
+  <input type="search" name="q" value="{{ busca }}" placeholder="Título ou autor" aria-label="Buscar">
+  <select name="categoria" aria-label="Categoria">
+    <option value="">Todas as categorias</option>
+    {% for c in categorias %}
+      <option value="{{ c }}" {{ 'selected' if c == categoria }}>{{ c }}</option>
+    {% endfor %}
+  </select>
+  <button class="btn" type="submit">Filtrar</button>
+  {% if busca or categoria %}<a href="{{ url_for('livros.listar') }}">Limpar</a>{% endif %}
+</form>
+
+{% if livros %}
+<div class="tabela-wrap">
+<table class="tabela">
+  <thead><tr><th>Título</th><th>Autor</th><th>Categoria</th><th>Disponíveis</th><th></th></tr></thead>
+  <tbody>
+  {% for l in livros %}
+    <tr>
+      <td data-label="Título"><a href="{{ url_for('livros.detalhe', livro_id=l.id) }}">{{ l.titulo }}</a></td>
+      <td data-label="Autor">{{ l.autor }}</td>
+      <td data-label="Categoria">{{ l.categoria }}</td>
+      <td data-label="Disponíveis">
+        <span class="tag {{ 'tag-ok' if l.disponivel else 'tag-erro' }}">{{ l.quantidade_disponivel }}/{{ l.quantidade_total }}</span>
+      </td>
+      <td><a href="{{ url_for('livros.detalhe', livro_id=l.id) }}">Ver</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+  <p class="vazio">Nenhum livro encontrado{% if busca %} para "{{ busca }}"{% endif %}.</p>
+{% endif %}
+{% endblock %}

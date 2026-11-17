@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Início{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Sua biblioteca comunitária, online.</h1>
+  <p>Consulte o acervo, pegue livros emprestados e acompanhe seus prazos de devolução.</p>
+  <form class="busca" action="{{ url_for('livros.listar') }}" method="get">
+    <input type="search" name="q" placeholder="Buscar por título ou autor" aria-label="Buscar livro">
+    <button class="btn" type="submit">Buscar</button>
+  </form>
+  <p class="muted">{{ total_livros }} títulos no acervo</p>
+</section>
+
+{% if current_user.is_authenticated and meus_ativos %}
+<section>
+  <h2>Seus empréstimos ativos</h2>
+  <div class="grid">
+    {% for e in meus_ativos %}
+      <div class="card">
+        <strong>{{ e.livro.titulo }}</strong>
+        <span class="muted">Devolver até {{ e.data_prevista.strftime('%d/%m/%Y') }}</span>
+        <span class="tag {{ 'tag-erro' if e.atrasado else 'tag-ok' }}">{{ e.status }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section>
+  <h2>Chegaram recentemente</h2>
+  <div class="grid">
+    {% for l in destaques %}
+      <a class="card card-link" href="{{ url_for('livros.detalhe', livro_id=l.id) }}">
+        <strong>{{ l.titulo }}</strong>
+        <span class="muted">{{ l.autor }}</span>
+        <span class="tag {{ 'tag-ok' if l.disponivel else 'tag-erro' }}">
+          {{ 'Disponível' if l.disponivel else 'Indisponível' }}
+        </span>
+      </a>
+    {% else %}
+      <p class="muted">Nenhum livro cadastrado ainda.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

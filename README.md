@@ -14,14 +14,14 @@ O leitor consulta o acervo, pega livros emprestados e acompanha seus prazos. O a
 | Front-end | HTML5, CSS3 (responsivo), JavaScript, templates Jinja2 |
 | Banco de dados | PostgreSQL (produção) · SQLite (desenvolvimento/testes) · ORM SQLAlchemy |
 | Autenticação | Flask-Login + senhas com hash (Werkzeug/scrypt) |
-| Testes | pytest + pytest-cov (27 casos, ~90% de cobertura) |
+| Testes | pytest + pytest-cov (30 casos, ~90% de cobertura) |
 | Hospedagem | Render (Web Service + PostgreSQL) |
 | Modo de codificação | Tradicional |
 
 ## Funcionalidades
 
 - Cadastro e login de leitores; perfis **leitor** e **admin**
-- Acervo com busca por título/autor e filtro por categoria
+- Acervo com busca por título/autor (ignora acentos) e filtro por categoria
 - CRUD de livros (admin) com validação de ISBN, ano e quantidade
 - Empréstimo com regras de negócio:
   - prazo de **14 dias**

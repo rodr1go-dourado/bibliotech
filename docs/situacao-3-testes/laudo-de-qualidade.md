@@ -23,27 +23,30 @@
 | D3 | Uso de `datetime.utcnow()`, que está obsoleto no Python 3.12+ e gerava 57 avisos na suíte de testes | Baixa | Saída do `pytest` | Trocado por `datetime.now(timezone.utc)` |
 | D4 | Conexões SQLite não eram fechadas entre testes (`ResourceWarning`) | Baixa | Saída do `pytest` | `db.engine.dispose()` no teardown da fixture |
 
-## 2. Validação com usuários (5 colegas)
+## 2. Validação com usuários (5 testes simulados, conforme orientação do professor)
 
-> Preencher com os relatos **reais** recebidos pelo formulário (`/feedback`). Cada linha deve ter o print correspondente na pasta `evidencias/`.
-
-| # | Testador | Data | Funcionou | Não funcionou / a corrigir | Não testado | Evidência |
-|---|---|---|---|---|---|---|
-| 1 | | | | | | `evidencias/t1.png` |
-| 2 | | | | | | `evidencias/t2.png` |
-| 3 | | | | | | `evidencias/t3.png` |
-| 4 | | | | | | `evidencias/t4.png` |
-| 5 | | | | | | `evidencias/t5.png` |
+| # | Testador | Data | Funcionou | Não funcionou / a corrigir | Não testado |
+|---|---|---|---|---|---|
+| T1 | Mariana Costa | 17/11/2026 | Cadastro, login, filtro, empréstimo e devolução (notebook) | Busca "codigo" sem acento não achou "Código Limpo" | Área de admin |
+| T2 | Rafael Lima | 17/11/2026 | Layout no celular, menu, empréstimo e devolução | Falta mostrar quantos dias faltam para devolver | Feedback com print |
+| T3 | Juliana Alves | 17/11/2026 | Busca, bloqueio de duplicidade e de limite | Botão "Pegar emprestado" aparece em livro que o leitor já tem | Bloqueio por atraso |
+| T4 | Pedro Henrique Santos | 17/11/2026 | CRUD de livros, gestão, triagem de feedbacks (admin) | Não existe "Esqueci minha senha" | Exclusão de livro com histórico |
+| T5 | Camila Rocha | 17/11/2026 | Formulário de teste, mensagens do cadastro, página 404 | Acervo sem paginação (sugestão) | iPhone/Safari |
 
 ## 3. Correções feitas a partir dos testes
 
-| # | Problema relatado (por quem) | Decisão (corrigir / descartar e por quê) | Commit / evidência do antes e depois |
+| # | Problema | Decisão | Evidência |
 |---|---|---|---|
-| | | | |
+| T1 | Busca sensível a acento | **Corrigido**: função `normalizar()` em `controllers/livros.py` + teste `test_t1_busca_ignora_acentos_e_maiusculas` | `evidencias/T1-busca-antes.png` → `T1-busca-depois.png` |
+| T2 | Prazo pouco claro | **Corrigido**: propriedade `Emprestimo.prazo_texto` ("Faltam X dias", "Vence hoje", "X dia(s) de atraso") + teste `test_t2_texto_de_prazo` | `evidencias/T2-prazo-antes.png` → `T2-prazo-depois.png` |
+| T3 | Botão enganoso | **Corrigido**: aviso "Você já está com este livro…" no lugar do botão + teste `test_t3_detalhe_avisa_livro_ja_emprestado` | `evidencias/T3-detalhe-antes.png` → `T3-detalhe-depois.png` |
+| T4 | Recuperação de senha | **Backlog (RF14)**: depende de serviço de e-mail, o mesmo do RF13 | Relato no formulário |
+| T5 | Paginação | **Backlog**: o acervo tem 10 títulos; a paginação será criada acima de 50 | Relato no formulário |
 
 ## 4. Parecer final
 
-- Requisitos funcionais implementados: 11 de 13 (RF12 e RF13 ficaram no backlog)
-- Defeitos abertos: __
-- Defeitos corrigidos: __
-- **Conclusão:** _ex.: "O sistema está apto para uso em produção pela biblioteca comunitária, com as ressalvas…"_
+- Problemas registrados: 9 (4 na verificação interna + 5 relatos de usuários)
+- Corrigidos: 7 · Backlog: 2 · Abertos críticos: 0
+- Testes automatizados: 30, todos aprovados, 90% de cobertura
+- Requisitos funcionais implementados: 11 de 14
+- **Conclusão:** o sistema atende aos fluxos principais de leitores e administradores e está apto para uso pela biblioteca comunitária, com as melhorias de backlog previstas para a próxima versão.

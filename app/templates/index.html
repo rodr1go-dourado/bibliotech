@@ -18,7 +18,7 @@
     {% for e in meus_ativos %}
       <div class="card">
         <strong>{{ e.livro.titulo }}</strong>
-        <span class="muted">Devolver até {{ e.data_prevista.strftime('%d/%m/%Y') }}</span>
+        <span class="muted">Devolver até {{ e.data_prevista.strftime('%d/%m/%Y') }} · {{ e.prazo_texto }}</span>
         <span class="tag {{ 'tag-erro' if e.atrasado else 'tag-ok' }}">{{ e.status }}</span>
       </div>
     {% endfor %}

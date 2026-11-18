@@ -8,3 +8,8 @@ venv/
 .coverage
 htmlcov/
 instance/
+
+# arquivos de entrega (não versionar)
+*.zip
+PIT*.pdf
+PIT*.docx

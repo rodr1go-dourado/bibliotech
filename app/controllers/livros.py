@@ -1,11 +1,19 @@
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
-from sqlalchemy import or_
+from flask_login import current_user
+import unicodedata
+
 
 from app import db
 from app.controllers import admin_required
 from app.models import Livro
 
 bp = Blueprint("livros", __name__, url_prefix="/livros")
+
+
+def normalizar(texto):
+    """Minúsculas e sem acentos: 'Código' -> 'codigo' (correção do teste T1)."""
+    sem_acento = unicodedata.normalize("NFKD", texto or "").encode("ascii", "ignore").decode("ascii")
+    return sem_acento.casefold()
 
 
 def _int_ou_none(valor):
@@ -20,12 +28,12 @@ def listar():
     busca = request.args.get("q", "").strip()
     categoria = request.args.get("categoria", "").strip()
     consulta = Livro.query
-    if busca:
-        termo = f"%{busca}%"
-        consulta = consulta.filter(or_(Livro.titulo.ilike(termo), Livro.autor.ilike(termo)))
     if categoria:
         consulta = consulta.filter_by(categoria=categoria)
     livros = consulta.order_by(Livro.titulo).all()
+    if busca:
+        termo = normalizar(busca)
+        livros = [l for l in livros if termo in normalizar(l.titulo) or termo in normalizar(l.autor)]
     categorias = [c[0] for c in db.session.query(Livro.categoria).distinct().order_by(Livro.categoria)]
     return render_template("livros/lista.html", livros=livros, busca=busca,
                            categoria=categoria, categorias=categorias)
@@ -34,7 +42,10 @@ def listar():
 @bp.route("/<int:livro_id>")
 def detalhe(livro_id):
     livro = db.session.get(Livro, livro_id) or abort(404)
-    return render_template("livros/detalhe.html", livro=livro)
+    meu_emprestimo = None
+    if current_user.is_authenticated:  # correção do teste T3
+        meu_emprestimo = current_user.emprestimos_ativos().filter_by(livro_id=livro.id).first()
+    return render_template("livros/detalhe.html", livro=livro, meu_emprestimo=meu_emprestimo)
 
 
 @bp.route("/novo", methods=["GET", "POST"])

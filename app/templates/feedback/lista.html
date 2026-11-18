@@ -15,7 +15,7 @@
     </header>
     {% if fb.funcionou %}<h3>✅ Funcionou</h3><p>{{ fb.funcionou }}</p>{% endif %}
     {% if fb.nao_funcionou %}<h3>❌ Não funcionou</h3><p>{{ fb.nao_funcionou }}</p>{% endif %}
-    {% if fb.nao_testado %}<h3>⏸ Não testado</h3><p>{{ fb.nao_testado }}</p>{% endif %}
+    {% if fb.nao_testado %}<h3>➖ Não testado</h3><p>{{ fb.nao_testado }}</p>{% endif %}
     {% if fb.sugestoes %}<h3>💡 Sugestões</h3><p>{{ fb.sugestoes }}</p>{% endif %}
     {% if fb.print_tela %}
       <a href="{{ url_for('feedback.print_tela', fb_id=fb.id) }}" target="_blank">

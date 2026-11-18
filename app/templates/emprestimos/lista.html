@@ -24,7 +24,8 @@
       <td data-label="Livro">{{ e.livro.titulo }}</td>
       {% if admin %}<td data-label="Leitor">{{ e.usuario.nome }}</td>{% endif %}
       <td data-label="Retirada">{{ e.data_emprestimo.strftime('%d/%m/%Y') }}</td>
-      <td data-label="Devolver até">{{ e.data_prevista.strftime('%d/%m/%Y') }}</td>
+      <td data-label="Devolver até">{{ e.data_prevista.strftime('%d/%m/%Y') }}
+        {% if e.ativo %}<br><small class="{{ 'erro-txt' if e.atrasado else 'muted' }}">{{ e.prazo_texto }}</small>{% endif %}</td>
       <td data-label="Status">
         <span class="tag {{ 'tag-erro' if e.atrasado else ('tag-ok' if e.ativo else 'tag-neutra') }}">{{ e.status }}</span>
       </td>

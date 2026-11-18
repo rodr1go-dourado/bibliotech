@@ -16,7 +16,7 @@ Grave com OBS Studio, Loom ou a gravação de tela do Windows (`Win + G`) e suba
 | 3:15 – 3:45 | Meus empréstimos | Mostre os status e devolva um livro. |
 | 3:45 – 4:30 | Login admin | Cadastre um livro com ISBN "123" e mostre a validação. Corrija e salve. Mostre a Gestão (abas Ativos / Atrasados). |
 | 4:30 – 5:00 | Formulário de teste | "Esse é o formulário que os colegas usaram para relatar bugs com print." Mostre a tela de Feedbacks. |
-| 5:00 – 5:40 | Terminal | Rode `pytest -v --cov=app`. "São 27 testes automatizados, todos passando, com 90% de cobertura." |
+| 5:00 – 5:40 | Terminal | Rode `pytest -v --cov=app`. "São 30 testes automatizados, todos passando, com 90% de cobertura." |
 | 5:40 – 6:00 | Celular / DevTools | Mostre a versão mobile e encerre: "Obrigado!" |
 
 ---

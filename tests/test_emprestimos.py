@@ -89,3 +89,21 @@ def test_admin_filtra_atrasados(admin_client, app):
     admin_client.post(f"/emprestimos/solicitar/{livro_id}")
     assert "Dom Casmurro" not in admin_client.get("/emprestimos/?filtro=atrasados").get_data(as_text=True)
     assert "Dom Casmurro" in admin_client.get("/emprestimos/?filtro=ativos").get_data(as_text=True)
+
+
+def test_t2_texto_de_prazo(app):
+    """Correção do teste de usuário T2: mostrar quantos dias faltam."""
+    with app.app_context():
+        e = Emprestimo(data_prevista=date.today() + timedelta(days=5))
+        assert e.prazo_texto == "Faltam 5 dias"
+        e.data_prevista = date.today(); assert e.prazo_texto == "Vence hoje"
+        e.data_prevista = date.today() - timedelta(days=2); assert e.prazo_texto == "2 dia(s) de atraso"
+
+
+def test_t3_detalhe_avisa_livro_ja_emprestado(leitor_client, app):
+    """Correção do teste de usuário T3: não mostrar 'Pegar emprestado' para quem já está com o livro."""
+    livro_id = _livro(app, "Dom Casmurro")
+    leitor_client.post(f"/emprestimos/solicitar/{livro_id}")
+    texto = leitor_client.get(f"/livros/{livro_id}").get_data(as_text=True)
+    assert "Você já está com este livro" in texto
+    assert "Pegar emprestado" not in texto

@@ -107,6 +107,24 @@ class Emprestimo(db.Model):
         return self.ativo and self.data_prevista < date.today()
 
     @property
+    def dias_restantes(self):
+        """Dias até o prazo (negativo = dias de atraso). Correção do teste T2."""
+        return (self.data_prevista - date.today()).days
+
+    @property
+    def prazo_texto(self):
+        if not self.ativo:
+            return ""
+        d = self.dias_restantes
+        if d > 1:
+            return f"Faltam {d} dias"
+        if d == 1:
+            return "Vence amanhã"
+        if d == 0:
+            return "Vence hoje"
+        return f"{-d} dia(s) de atraso"
+
+    @property
     def status(self):
         if not self.ativo:
             return "Devolvido"

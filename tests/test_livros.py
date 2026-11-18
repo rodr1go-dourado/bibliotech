@@ -66,3 +66,10 @@ def test_edicao_nao_reduz_abaixo_do_emprestado(admin_client, app):
 
 def test_livro_inexistente_retorna_404(client):
     assert client.get("/livros/9999").status_code == 404
+
+
+def test_t1_busca_ignora_acentos_e_maiusculas(client):
+    """Correção do teste de usuário T1: 'codigo' deve achar 'Código Limpo'."""
+    texto = client.get("/livros/?q=CODIGO").get_data(as_text=True)
+    assert "Código Limpo" in texto
+    assert "Código Limpo" in client.get("/livros/?q=martin").get_data(as_text=True)

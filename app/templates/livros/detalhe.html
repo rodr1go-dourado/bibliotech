@@ -13,7 +13,10 @@
 
   <div class="acoes">
     {% if current_user.is_authenticated %}
-      {% if livro.disponivel %}
+      {% if meu_emprestimo %}
+        <div class="alerta alerta-aviso" style="margin:0">Você já está com este livro. Devolva até
+          {{ meu_emprestimo.data_prevista.strftime('%d/%m/%Y') }} ({{ meu_emprestimo.prazo_texto }}).</div>
+      {% elif livro.disponivel %}
         <form method="post" action="{{ url_for('emprestimos.solicitar', livro_id=livro.id) }}">
           <button class="btn" type="submit">Pegar emprestado</button>
         </form>

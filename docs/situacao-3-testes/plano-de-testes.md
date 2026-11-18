@@ -37,6 +37,9 @@ A estratégia segue o **Modelo V**:
 | CT17c | RF09 | Filtro ativos/atrasados | Lista correta | `test_emprestimos::test_admin_filtra_atrasados` | ✅ Passou |
 | CT18 | RF10 | Feedback com print PNG | Salvo com imagem, status Aberto | `test_feedback::test_ct18_…` | ✅ Passou |
 | CT19 | RF10 | Feedback vazio / arquivo não imagem | HTTP 400 | `test_feedback::test_ct19_…`, `test_ct19b_…` | ✅ Passou |
+| T1 | RF03 | Busca "CODIGO" sem acento | Encontra "Código Limpo" | `test_livros::test_t1_…` | ✅ Passou |
+| T2 | RF08 | Texto de prazo | "Faltam 5 dias" / "Vence hoje" / atraso | `test_emprestimos::test_t2_…` | ✅ Passou |
+| T3 | RN05 | Detalhe de livro já emprestado | Aviso no lugar do botão | `test_emprestimos::test_t3_…` | ✅ Passou |
 | CT20 | RF11 | Admin lista e muda status | Status = Corrigido | `test_feedback::test_ct20_…` | ✅ Passou |
 
 ## Execução
@@ -45,7 +48,7 @@ A estratégia segue o **Modelo V**:
 pytest -v --cov=app --cov-report=term-missing
 ```
 
-**Resultado:** 27 testes, **27 aprovados, 0 falhas**, cobertura de **90%** das linhas do pacote `app`.
+**Resultado:** 30 testes (27 iniciais + 3 das correções dos testes de usuário), **30 aprovados, 0 falhas**, cobertura de **90%** das linhas do pacote `app`.
 
 | Módulo | Cobertura |
 |---|---|

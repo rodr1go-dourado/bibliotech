@@ -96,3 +96,4 @@ form.inline select { width: auto; }
   .tabela td { display: flex; justify-content: space-between; border: 0; padding: 4px 14px; }
   .tabela td[data-label]::before { content: attr(data-label); font-weight: 600; color: var(--muted); }
 }
+.erro-txt { color: var(--erro); font-weight: 600; }

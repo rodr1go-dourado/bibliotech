@@ -37,6 +37,7 @@ O **BiblioTech** é uma aplicação web responsiva que centraliza o acervo e os 
 | RF11 | Triagem de feedbacks (Aberto / Corrigido / Descartado) | Baixa | Implementado (novo no PIT II) |
 | RF12 | Reserva de livro indisponível (fila de espera) | Baixa | Backlog |
 | RF13 | Envio de e-mail lembrando a devolução | Baixa | Backlog |
+| RF14 | Recuperação de senha por e-mail | Média | Backlog (veio do teste T4) |
 
 ## 1.5 Regras de negócio
 
